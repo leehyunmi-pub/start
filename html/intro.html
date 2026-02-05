@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWN:R</title>
+    <link rel="stylesheet" href="../css/test.css">
+    <script src="../js/gsap.min.js"></script>
+    <script src="../js/lenis.min.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body class="bg_black">
+    <div id="dh_cursor">
+        <div class="dh_cursor_circle"></div>
+    </div>
+    <div class="wrap">
+        <header id="header" class="header">
+            <div class="inner">
+                <h1 class="logo">
+                    <a href="">OWN:R</a>
+                </h1>
+                <nav id="nav" class="nav">
+                    <ul class="navbar">
+                        <li><a href="">커뮤니티</a></li>
+                        <li><a href="">미디어</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main id="container" class="container">
+            <section class="main_visual">
+                <div class="inner">
+                    <button type="button" class="ico" onclick="onOpenLayerPopup('layer_test')"></button>
+                    <!-- <i class="ico"></i> -->
+                    <a href="#" class="main02" onclick="mainRightShow2();"><span>소비 혁명<br>OWN:R</span> <i class="arrow"></i></a>
+                    <a href="#" class="main01" onclick="mainLeftShow2();"><span>유통의<br>새 지평</span> <i class="arrow"></i></a>
+                </div>
+            </section>
+            <section>
+                <div>
+                    <img src="../images/common/temp2.png" alt="">
+                </div>
+            </section>
+            <div class="fixed_link">
+                <a href="">스페셜관</a>
+            </div>
+        </main>
+        <footer id="footer" class="footer">
+
+        </footer>
+
+
+        <!-- layer popup -->
+        <div class="layer_popup layer_test" data-lenis-prevent>
+            <div class="layer_wrap">
+                <button class="btn_layer_close" onclick="onCloseLayerPpopup('layer_test')">close</button>
+                <div class="pop_con" style="color:#fff">
+                    dkfjlkdfjkldsf
+                </div>
+            </div>
+            <div class="dim"></div>
+        </div>
+        <!-- //layer popup -->
+
+    </div>
+
+    <script>
+        // s - scroll smooth
+        const lenis = new Lenis({
+            duration: 2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        lenis.stop();
+
+        function lenisStart() {
+            lenis.start();
+        }
+        gsap.delayedCall(1.8, () => {
+            lenisStart();
+        })
+        // e- scroll smooth
+
+        // intro motion
+        window.addEventListener('beforeunload', function() {
+            window.scrollTo(0, 0)
+        });
+
+        window.addEventListener('DOMContentLoaded', function(){
+            const mainVisual = document.querySelector('body');
+            const container = document.querySelector('.container');
+            setTimeout(function() {
+                mainVisual.classList.add('loaded');
+            }, 100);
+        });
+
+        // mouse motion
+        const cursor2 = document.querySelector("#dh_cursor");
+        window.addEventListener("mousemove", e => {
+            gsap.to(cursor2, {duration: 1, left: e.pageX, top: e.pageY});
+        });
+        document.querySelectorAll(".container a, .container button").forEach(link => {
+            link.addEventListener("mouseenter", () => {
+                cursor2.classList.add("image");
+            });
+            link.addEventListener("mouseleave", () => {
+                cursor2.classList.remove("image");
+            });
+        });
+
+        // main motion
+        const mainVisual = document.querySelector('.main_visual');
+        const mainButton = document.querySelector('.main_visual .main01');
+        const mainLeft = document.querySelector('.main_left');
+        const mainRight = document.querySelector('.main_right');
+        const body = document.querySelector('body');
+        const header = document.querySelector('header');
+        const container = document.querySelector('.container');
+
+        const mainLeftShow = () => {
+            mainVisual.style.display = 'none';
+            container.classList.remove('layer_activated');
+            mainRight.classList.remove('active');
+            mainLeft.classList.add('active');
+            body.classList.add('bg_black');
+        };
+        const mainRightShow = () => {
+            mainVisual.style.display = 'none';
+            container.classList.remove('layer_activated');
+            mainLeft.classList.remove('active');
+            mainRight.classList.add('active');
+            body.classList.remove('bg_black');
+        };
+
+        const mainLeftShow2 = () => {
+            window.location.href = 'main.html#test1';
+        };
+        const mainRightShow2 = () => {
+            window.location.href = 'main.html#test2';
+        };
+    </script>
+</body>
+</html>
